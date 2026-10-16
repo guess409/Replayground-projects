@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ReyMarket - Temukan Produk Favoritmu</title>
+    <!-- Include Font Awesome Library -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+<style>
+/* GLOBAL */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 12px;
+  background:
+    radial-gradient(ellipse at top, #19362A, #101512 48%, #0B0E0C);
+  color: #EAEAEA;
+  font-family: Arial, sans-serif;
+}
+
+button, input {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* HEADER */
+.site-header {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 18px;
+  padding: 16px;
+  border: 1px solid #28674B;
+  border-radius: 20px;
+  background:
+    radial-gradient(ellipse at 100% 0%, #35B77955, transparent 45%),
+    linear-gradient(145deg, #123D2B, #09271E 65%, #071B15);
+  box-shadow:
+    0 8px 0 #04150F,
+    0 14px 30px #00000055,
+    inset 0 1px 0 #FFFFFF20;
+}
+
+/* LOGO + AKUN */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  color: white;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #6EE7B755;
+  border-radius: 13px;
+  background: linear-gradient(145deg, #34D399, #047857);
+  color: #062E22;
+  box-shadow: 0 4px 0 #064E3B,
+              inset 0 1px 0 #FFFFFF80;
+}
+
+.brand-name {
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.brand-name span {
+  display: block;
+  margin-top: 3px;
+  color: #6EE7B7;
+  font-size: 10px;
+  letter-spacing: 3px;
+}
+
+.account {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.account button {
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-login {
+  border: 1px solid #FFFFFF40;
+  background: #FFFFFF10;
+  color: white;
+}
+
+.btn-signup {
+  border: 1px solid #6EE7B7;
+  background: linear-gradient(#6EE7B7, #10B981);
+  color: #052E22;
+  box-shadow: 0 3px 0 #047857;
+}
+
+/* SEARCH BAR */
+.searchbar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px;
+  border: 1px solid #FFFFFF25;
+  border-radius: 14px;
+  background: #071B15;
+  box-shadow:
+    inset 0 3px 8px #00000050,
+    0 2px 0 #FFFFFF0A;
+}
+
+.search-icon {
+  padding-left: 8px;
+  color: #6EE7B7;
+}
+
+.searchbar input {
+  flex: 1;
+  width: 0;
+  min-width: 0;
+  padding: 11px 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: white;
+  font-size: 14px;
+}
+
+.searchbar input::placeholder {
+  color: #91A99B;
+}
+
+.search-button {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border: 1px solid #6EE7B7;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #6EE7B7, #059669);
+  color: #052E22;
+  box-shadow: 0 3px 0 #065F46;
+  cursor: pointer;
+}
+
+.search-button:active,
+.btn-signup:active {
+  transform: translateY(2px);
+  box-shadow: none;
+}
+
+/* NAVIGASI */
+.nav-menu {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding: 15px 0 8px;
+  scrollbar-width: thin;
+  scrollbar-color: #347A59 transparent;
+}
+
+.nav-menu a,
+.nav-admin {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 7px;
+  padding: 10px 12px;
+  border: 1px solid #FFFFFF18;
+  border-radius: 10px;
+  background: #FFFFFF09;
+  color: #D2E8DC;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.nav-menu .nav-active {
+  border-color: #34D39955;
+  background: #34D39920;
+  color: #6EE7B7;
+}
+
+.nav-admin {
+  cursor: pointer;
+}
+
+/* HERO BANNER */
+.hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 215px;
+  margin-top: 12px;
+  padding: 20px 12px 16px;
+  overflow: hidden;
+  border: 1px solid #FFFFFF12;
+  border-radius: 16px;
+  background: linear-gradient(120deg, #FFFFFF08, #FFFFFF02);
+  box-shadow: inset 0 1px 0 #FFFFFF12;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  flex: 1;
+  min-width: 0;
+}
+
+.hero-tag {
+  display: inline-block;
+  margin-bottom: 13px;
+  padding: 7px 9px;
+  border: 1px solid #6EE7B733;
+  border-radius: 20px;
+  background: #34D39915;
+  color: #6EE7B7;
+  font-size: 9px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.hero h1 {
+  margin: 0;
+  color: #F0FDF4;
+  font-size: clamp(25px, 7vw, 36px);
+  line-height: 1.12;
+  letter-spacing: -1px;
+}
+
+.hero h1 span {
+  color: #6EE7B7;
+  text-shadow: 0 0 22px #34D39930;
+}
+
+.hero p {
+  max-width: 260px;
+  margin: 12px 0 17px;
+  color: #B8D2C2;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.hero-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid #6EE7B7;
+  border-radius: 10px;
+  background: linear-gradient(#6EE7B7, #10B981);
+  color: #052E22;
+  font-size: 12px;
+  font-weight: bold;
+  box-shadow: 0 4px 0 #065F46,
+              0 7px 15px #00000035,
+              inset 0 1px 0 #FFFFFF90;
+}
+
+/* DEKORASI HERO */
+.hero-art {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 95px;
+  height: 150px;
+}
+
+.hero-circle {
+  display: grid;
+  place-items: center;
+  width: 82px;
+  height: 82px;
+  border: 1px solid #6EE7B788;
+  border-radius: 27px;
+  background: linear-gradient(145deg, #34D399, #047857);
+  color: #E8FFF3;
+  font-size: 36px;
+  transform: rotate(9deg);
+  box-shadow:
+    0 10px 0 #064E3B,
+    0 17px 25px #00000055,
+    inset 0 2px 0 #FFFFFF75,
+    inset 0 -5px 12px #064E3B55;
+}
+
+.hero-spark {
+  position: absolute;
+  color: #A7F3D0;
+  text-shadow: 0 0 12px #34D399;
+}
+
+.spark-one {
+  top: 12px;
+  right: 2px;
+  font-size: 28px;
+}
+
+.spark-two {
+  bottom: 12px;
+  left: 0;
+  font-size: 32px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 380px) {
+  .site-header {
+    padding: 11px;
+  }
+
+  .topbar {
+    gap: 10px;
+  }
+
+  .brand-name {
+    font-size: 13px;
+  }
+
+  .account button {
+    padding: 9px 8px;
+    font-size: 11px;
+  }
+
+  .hero {
+    padding: 16px 8px;
+  }
+
+  .hero-art {
+    width: 72px;
+  }
+
+  .hero-circle {
+    width: 65px;
+    height: 65px;
+    font-size: 28px;
+  }
+}
+  
+/* GRID PRODUK */
+.marketplace {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 4px 0;
+}
+
+/* KARTU PRODUK */
+.produk {
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 10px;
+  overflow: hidden;
+  background: linear-gradient(145deg, #242A28, #191D1C);
+  border: 1px solid #3E5248;
+  border-radius: 18px;
+  overflow-wrap: anywhere;
+  box-shadow:
+    0 6px 0 #0B100E,
+    0 10px 20px #00000045,
+    inset 0 1px 0 #FFFFFF0D;
+}
+
+.produk img {
+  display: block;
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 12px;
+  background: #303A35;
+}
+
+.produk .nama {
+  margin: 10px 0 5px;
+  color: #F3F4F6;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.produk .harga {
+  margin: 6px 0;
+  color: #6EE7B7;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.produk .deskripsi {
+  margin: 7px 0 10px;
+  color: #B8C5BE;
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.beli {
+  width: 100%;
+  padding: 13px 8px;
+  border: 1px solid #6EE7B7;
+  border-radius: 13px;
+  background: linear-gradient(180deg, #34D399, #059669);
+  color: #052E22;
+  font-size: 14px;
+  font-weight: bold;
+  box-shadow: 0 5px 0 #065F46;
+  cursor: pointer;
+}
+
+.beli:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #065F46;
+}
+
+/* STATUS & PLACEHOLDER GAMBAR */
+.status {
+  margin: 14px 4px;
+  color: #B8D2C2;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.status:empty {
+  display: none;
+}
+
+.produk .gambar-kosong {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 170px;
+  border-radius: 12px;
+  background: #303A35;
+  color: #6EE7B7;
+  font-size: 34px;
+}
+
+.user-name {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  max-width: 140px;
+  padding: 10px 12px;
+  overflow: hidden;
+  border: 1px solid #34D39955;
+  border-radius: 10px;
+  background: #34D39920;
+  color: #6EE7B7;
+  font-size: 12px;
+  font-weight: bold;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cart-badge {
+  display: inline-block;
+  min-width: 18px;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  background: #6EE7B7;
+  color: #052E22;
+  font-size: 11px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.cart-badge:empty {
+  display: none;
+}
+
+.produk .penjual {
+  margin: 4px 0 0;
+  color: #71877A;
+  font-size: 11px;
+}
+
+.beli:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 22px;
+  z-index: 50;
+  max-width: 90%;
+  padding: 12px 16px;
+  border: 1px solid #6EE7B7;
+  border-radius: 12px;
+  background: #0F2A1E;
+  color: #D1FAE5;
+  font-size: 13px;
+  transform: translateX(-50%);
+  box-shadow: 0 8px 20px #00000080;
+}
+
+.toast.hidden {
+  display: none;
+}
+
+</style>
+</head>
+<body>
+
+<header class="site-header">
+
+  <div class="topbar">
+    <a href="#" class="brand">
+      <span class="brand-icon">
+        <i class="fa fa-shopping-bag"></i>
+      </span>
+      <span class="brand-name">REY<span>MARKET</span></span>
+    </a>
+
+    <div class="account" id="account">
+      <button onclick="window.location.href='signin.html'" class="btn-login" id="sighin">
+        Sign In
+      </button>
+      <button onclick="window.location.href='signup.html'" class="btn-signup" id="sigup">
+        Sign Up <i class="fa fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <form class="searchbar" id="searchForm">
+    <i class="fa fa-search search-icon"></i>
+    <input
+      type="search"
+      id="searchInput"
+      placeholder="Cari produk impianmu..."
+      aria-label="Cari produk"
+    >
+    <button type="submit" class="search-button"
+      aria-label="Cari">
+      <i class="fa fa-search"></i>
+    </button>
+  </form>
+
+  <nav class="nav-menu">
+    <a href="#" class="nav-active">
+      <i class="fa fa-home"></i> Home
+    </a>
+    <a href="#marketplace">
+      <i class="fa fa-th-large"></i> Produk
+    </a>
+    <a href="about.html">
+      <i class="fa fa-info-circle"></i> About
+    </a>
+    <a href="jual.html">
+      <i class="fa fa-tags"></i> Jualan Saya
+    </a>
+    <a href="orders.html">
+      <i class="fa fa-list-alt"></i> Pesanan
+    </a>
+    <a href="cart.html">
+      <i class="fa fa-shopping-cart"></i> Keranjang<span class="cart-badge" id="cartCount"></span>
+    </a>
+    <a href="report.html">
+      <i class="fa fa-bug"></i> Report Bugs
+    </a>
+    <button type="button" class="nav-admin" id="admin">
+      <i class="fa fa-shield"></i> Admin
+    </button>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">
+        <i class="fa fa-bolt"></i> YOUR DAILY FINDS
+      </span>
+      <h1>Find Your<br>Next <span>Favorite.</span></h1>
+      <p>
+        Temukan produk pilihan dengan pengalaman
+        belanja yang simpel dan nyaman.
+      </p>
+      <a href="#marketplace" class="hero-button">
+        Jelajahi Produk
+        <i class="fa fa-arrow-right"></i>
+      </a>
+    </div>
+
+    <div class="hero-art">
+      <div class="hero-circle">
+        <i class="fa fa-shopping-bag"></i>
+      </div>
+      <span class="hero-spark spark-one">✦</span>
+      <span class="hero-spark spark-two">✧</span>
+    </div>
+  </div>
+
+</header>
+
+  
+
+<p class="status" id="status">Memuat produk...</p>
+
+<div class="marketplace" id="marketplace"></div>
+
+<div class="toast hidden" id="toast"></div>
+
+<script>
+  const searchForm = document.getElementById("searchForm");
+  const searchInput = document.getElementById("searchInput");
+  const marketplace = document.getElementById("marketplace");
+  const statusBox = document.getElementById("status");
+
+  // Buat 1 kartu produk. Pakai textContent (bukan innerHTML) supaya aman.
+  function buatKartu(p) {
+    const card = document.createElement("div");
+    card.className = "produk";
+
+    if (p.image) {
+      const img = document.createElement("img");
+      img.src = "/uploads/" + encodeURIComponent(p.image);
+      img.alt = p.name;
+      // Kalau file gambar tidak ada, ganti dengan placeholder
+      img.onerror = function () {
+        const kosong = document.createElement("div");
+        kosong.className = "gambar-kosong";
+        kosong.innerHTML = '<i class="fa fa-image"></i>';
+        img.replaceWith(kosong);
+      };
+      card.appendChild(img);
+    } else {
+      const kosong = document.createElement("div");
+      kosong.className = "gambar-kosong";
+      kosong.innerHTML = '<i class="fa fa-image"></i>';
+      card.appendChild(kosong);
+    }
+
+    const nama = document.createElement("p");
+    nama.className = "nama";
+    nama.textContent = p.name;
+
+    const harga = document.createElement("p");
+    harga.className = "harga";
+    harga.textContent = "Rp" + Number(p.price).toLocaleString("id-ID");
+
+    const deskripsi = document.createElement("p");
+    deskripsi.className = "deskripsi";
+    deskripsi.textContent = p.description;
+
+    const penjual = document.createElement("p");
+    penjual.className = "penjual";
+    penjual.textContent = "Penjual: " + p.seller;
+
+    const tombol = document.createElement("button");
+    tombol.className = "beli";
+
+    if (pengguna && p.seller_id === pengguna.id) {
+      tombol.textContent = "Produk kamu";
+      tombol.disabled = true;
+    } else {
+      tombol.innerHTML = '<i class="fa fa-cart-plus"></i> Masukkan keranjang';
+      tombol.addEventListener("click", function () { masukKeranjang(p, tombol); });
+    }
+
+    card.append(nama, harga, penjual, deskripsi, tombol);
+
+    // Klik kartu (selain tombol) membuka halaman detail produk
+    card.style.cursor = "pointer";
+    card.addEventListener("click", function (event) {
+      if (event.target.closest(".beli")) return;
+      window.location.href = "produk.html?id=" + p.id;
+    });
+    return card;
+  }
+
+  // Ambil produk dari backend (opsional kata kunci pencarian)
+  let pengguna = null;   // data user yang sedang login (null = belum login)
+
+  function toast(pesan) {
+    const t = document.getElementById("toast");
+    t.textContent = pesan;
+    t.classList.remove("hidden");
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(function () { t.classList.add("hidden"); }, 2200);
+  }
+
+  function setBadge(jumlah) {
+    document.getElementById("cartCount").textContent = jumlah > 0 ? jumlah : "";
+  }
+
+  async function masukKeranjang(p, tombol) {
+    if (!pengguna) {
+      window.location.href = "signin.html";   // belum login
+      return;
+    }
+    tombol.disabled = true;
+    try {
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ product_id: p.id, quantity: 1 })
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        toast(data.error || "Gagal memasukkan ke keranjang.");
+        return;
+      }
+      setBadge(data.count);
+      toast('"' + p.name + '" masuk keranjang.');
+    } catch (err) {
+      toast("Tidak bisa terhubung ke backend.");
+    } finally {
+      tombol.disabled = false;
+    }
+  }
+
+  let permintaanKe = 0;   // penanda: hanya hasil permintaan TERBARU yang ditampilkan
+
+  async function muatProduk(keyword) {
+    const nomor = ++permintaanKe;
+
+    // Kartu lama dibiarkan sampai hasil baru datang (tidak berkedip)
+    if (marketplace.children.length === 0) {
+      statusBox.textContent = "Memuat produk...";
+    }
+
+    try {
+      const url = keyword
+        ? "/api/products?q=" + encodeURIComponent(keyword)
+        : "/api/products";
+
+      const res = await fetch(url);
+      if (!res.ok) throw new Error("Status " + res.status);
+
+      const daftar = await res.json();
+      if (nomor !== permintaanKe) return;   // sudah ada ketikan yang lebih baru
+
+      marketplace.innerHTML = "";
+
+      if (daftar.length === 0) {
+        statusBox.textContent = keyword
+          ? 'Tidak ada produk untuk "' + keyword + '".'
+          : "Belum ada produk.";
+        return;
+      }
+
+      statusBox.textContent = "";
+      daftar.forEach(function (p) {
+        marketplace.appendChild(buatKartu(p));
+      });
+    } catch (err) {
+      if (nomor !== permintaanKe) return;
+      marketplace.innerHTML = "";
+      statusBox.textContent =
+        "Gagal memuat produk. Pastikan backend jalan " +
+        "(python app.py di Termux) dan buka lewat http://127.0.0.1:5000";
+    }
+  }
+
+  // Cari otomatis saat mengetik (jeda 300 ms supaya tidak spam server)
+  let timerCari = null;
+  searchInput.addEventListener("input", function () {
+    clearTimeout(timerCari);
+    timerCari = setTimeout(function () {
+      muatProduk(searchInput.value.trim());
+    }, 300);
+  });
+
+  searchForm.addEventListener("submit", function (event) {
+    event.preventDefault();
+    clearTimeout(timerCari);
+    muatProduk(searchInput.value.trim());
+  });
+
+  // Cek apakah sudah login. Kalau ya, ganti Sign In/Up dengan nama + Sign Out.
+  async function cekLogin() {
+    try {
+      const res = await fetch("/api/me");
+      const data = await res.json();
+      if (!data.user) return;
+      pengguna = data.user;
+
+      try {
+        const cart = await (await fetch("/api/cart")).json();
+        setBadge(cart.count || 0);
+      } catch (e) { /* abaikan */ }
+
+      const akun = document.getElementById("account");
+      akun.innerHTML = "";
+
+      const nama = document.createElement("span");
+      nama.className = "user-name";
+      const ikon = document.createElement("i");
+      ikon.className = "fa fa-user-circle";
+      nama.append(ikon, document.createTextNode(data.user.username));
+
+      const keluar = document.createElement("button");
+      keluar.className = "btn-login";
+      keluar.textContent = "Sign Out";
+      keluar.addEventListener("click", async function () {
+        await fetch("/api/logout", { method: "POST" });
+        window.location.reload();
+      });
+
+      akun.append(nama, keluar);
+    } catch (err) {
+      // backend mati: biarkan tombol Sign In / Sign Up seperti semula
+    }
+  }
+
+  // Tombol Admin di menu -> halaman admin (server yang memeriksa hak akses)
+  const tombolAdmin = document.getElementById("admin");
+  if (tombolAdmin) {
+    tombolAdmin.addEventListener("click", function () {
+      window.location.href = "admin.html";
+    });
+  }
+
+  // Cek login dulu supaya tombol di kartu tahu mana produk milik user sendiri
+  cekLogin().then(function () { muatProduk(""); });
+</script>
+
+</body>
+</html>

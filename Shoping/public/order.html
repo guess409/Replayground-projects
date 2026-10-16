@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Pesanan - ReyMarket</title>
+
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      padding: 18px;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      color: #E5F3EA;
+      background:
+        radial-gradient(ellipse at top, #193D2D, transparent 55%),
+        linear-gradient(145deg, #101713, #080B09);
+    }
+    button, input, textarea { font: inherit; }
+    .wrap { max-width: 650px; margin: auto; }
+    .hidden { display: none !important; }
+
+    /* HEADER */
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    .brand {
+      color: #F0FDF4;
+      font-size: 17px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      text-decoration: none;
+    }
+    .brand span { color: #6EE7B7; }
+    .header-links { display: flex; flex-wrap: wrap; gap: 8px; }
+    .back {
+      padding: 10px 13px;
+      border: 1px solid #365746;
+      border-radius: 10px;
+      background: #17251D;
+      color: #C5E8D2;
+      text-decoration: none;
+      font-size: 12px;
+    }
+
+    /* KARTU */
+    .card {
+      padding: 20px 18px;
+      margin-bottom: 16px;
+      border: 1px solid #347653;
+      border-radius: 20px;
+      background:
+        radial-gradient(circle at 100% 0%, #34D39920, transparent 38%),
+        linear-gradient(145deg, #1B2921, #111914 75%);
+      box-shadow: 0 6px 0 #06100A, 0 14px 28px #00000060, inset 0 1px 0 #FFFFFF12;
+    }
+    h1 {
+      margin: 0 0 6px;
+      color: #F0FDF4;
+      font-size: 26px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+    h1 span { color: #6EE7B7; }
+    h2 { margin: 0 0 4px; color: #F0FDF4; font-size: 17px; }
+    h3 { margin: 0 0 10px; color: #D8E9DE; font-size: 14px; }
+    .subtitle { margin: 0; color: #A9BDB0; font-size: 13px; line-height: 1.6; }
+    .center { text-align: center; }
+    .big-icon { margin-bottom: 10px; color: #6EE7B7; font-size: 40px; }
+
+    /* TOMBOL */
+    .btn {
+      padding: 12px 16px;
+      border-radius: 11px;
+      border: 1px solid #FFFFFF40;
+      background: #FFFFFF10;
+      color: white;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-main {
+      border: 1px solid #6EE7B7;
+      background: linear-gradient(180deg, #6EE7B7, #10B981);
+      color: #052E22;
+      box-shadow: 0 4px 0 #065F46, inset 0 1px 0 #FFFFFF90;
+    }
+    .btn-main:active:not(:disabled) { transform: translateY(3px); box-shadow: 0 1px 0 #065F46; }
+    .btn-danger { border-color: #F8717180; background: #F8717120; color: #FCA5A5; }
+    .btn-small { padding: 8px 12px; font-size: 12px; }
+    .aksi { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+    .aksi .btn { flex: 1; min-width: 130px; }
+
+    /* FORM */
+    .field-label { display: block; margin: 15px 0 7px; color: #D8E9DE; font-size: 12px; font-weight: bold; }
+    .input-box {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 13px;
+      border: 1px solid #344A3B;
+      border-radius: 12px;
+      background: #0C130E;
+      box-shadow: inset 0 3px 7px #00000035;
+    }
+    .input-box > i { color: #6EE7B7; }
+    .input-box input, .input-box textarea {
+      width: 100%;
+      min-width: 0;
+      padding: 13px 0;
+      border: none;
+      outline: none;
+      background: transparent;
+      color: white;
+      font-size: 13px;
+    }
+    .input-box textarea { resize: vertical; min-height: 80px; }
+    .input-box:focus-within { border-color: #6EE7B7; box-shadow: 0 0 0 3px #34D39915; }
+    .input-box.invalid { border-color: #F87171; box-shadow: 0 0 0 3px #F8717115; }
+    input::placeholder, textarea::placeholder { color: #708779; }
+    .error { min-height: 16px; margin: 6px 2px 0; color: #FCA5A5; font-size: 11px; }
+
+    /* GAMBAR */
+    .thumb, .thumb-kosong {
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 10px;
+      object-fit: cover;
+      background: #303A35;
+    }
+    .thumb-kosong { display: grid; place-items: center; color: #6EE7B7; font-size: 22px; }
+
+    /* STATUS PESANAN */
+    .badge {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 20px;
+      border: 1px solid #FFFFFF30;
+      font-size: 11px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .st-menunggu  { color: #FCD34D; border-color: #FCD34D66; background: #FCD34D18; }
+    .st-diproses  { color: #93C5FD; border-color: #93C5FD66; background: #93C5FD18; }
+    .st-dikirim   { color: #6EE7B7; border-color: #6EE7B788; background: #34D39922; }
+    .st-selesai   { color: #A7F3D0; border-color: #A7F3D066; background: #10B98133; }
+    .st-dibatalkan{ color: #FCA5A5; border-color: #F8717180; background: #F8717120; }
+
+    .status { margin: 14px 4px; color: #B8D2C2; font-size: 13px; text-align: center; }
+    .status:empty { display: none; }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      z-index: 10;
+      max-width: 90%;
+      padding: 12px 16px;
+      border: 1px solid #6EE7B7;
+      border-radius: 12px;
+      background: #0F2A1E;
+      color: #D1FAE5;
+      font-size: 13px;
+      transform: translateX(-50%);
+      box-shadow: 0 8px 20px #00000080;
+    }
+
+    .head-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .head-row h1 { margin: 0; font-size: 22px; }
+    .resi { margin: 10px 0 0; color: #A9BDB0; font-size: 12px; line-height: 1.7; }
+    .resi strong { color: #F0FDF4; letter-spacing: 1px; }
+    .progress { height: 8px; margin-top: 14px; overflow: hidden; border: 1px solid #344A3B; border-radius: 8px; background: #0C130E; }
+    .progress > div { height: 100%; width: 0; border-radius: 8px; background: linear-gradient(90deg, #34D399, #6EE7B7); transition: width 0.6s; }
+    .progress-teks { margin: 8px 0 0; color: #A9BDB0; font-size: 12px; }
+    .barang { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid #2D4538; font-size: 13px; }
+    .barang:last-child { border-bottom: none; }
+    .barang .info { flex: 1; min-width: 0; }
+    .barang .nama { margin: 0; overflow: hidden; color: #F0FDF4; font-weight: bold; text-overflow: ellipsis; white-space: nowrap; }
+    .barang .sub { margin: 2px 0 0; color: #71877A; font-size: 11px; }
+    .barang .harga { color: #D8E9DE; font-weight: bold; white-space: nowrap; }
+    .alamat { margin: 0; color: #D8E9DE; font-size: 13px; line-height: 1.7; word-break: break-word; white-space: pre-wrap; }
+    .alamat .muted { color: #71877A; }
+    .baris { display: flex; justify-content: space-between; margin: 6px 0; font-size: 13px; color: #D8E9DE; }
+    .baris.total { margin-top: 12px; padding-top: 12px; border-top: 1px solid #2D4538; font-size: 15px; font-weight: bold; }
+    .baris.total strong { color: #6EE7B7; font-size: 20px; }
+
+    /* LINIMASA */
+    .timeline { position: relative; margin: 0; padding: 0 0 0 22px; list-style: none; }
+    .timeline::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: #2D4538; }
+    .timeline li { position: relative; padding: 0 0 16px; }
+    .timeline li:last-child { padding-bottom: 0; }
+    .timeline li::before {
+      content: ""; position: absolute; left: -22px; top: 3px;
+      width: 14px; height: 14px; border: 2px solid #365746; border-radius: 50%; background: #101713;
+    }
+    .timeline li.terbaru::before { border-color: #6EE7B7; background: #6EE7B7; box-shadow: 0 0 0 4px #34D39922; }
+    .timeline .judul { margin: 0; color: #D8E9DE; font-size: 13px; line-height: 1.5; }
+    .timeline li.terbaru .judul { color: #F0FDF4; font-weight: bold; }
+    .timeline .jam { margin: 2px 0 0; color: #71877A; font-size: 11px; }
+
+  </style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <header class="header">
+    <a href="welcome.html" class="brand">REY<span>MARKET</span></a>
+    <div class="header-links">
+      <a href="orders.html" class="back"><i class="fa fa-arrow-left"></i> Pesanan</a>
+      <a href="welcome.html" class="back"><i class="fa fa-home"></i> Beranda</a>
+    </div>
+  </header>
+
+
+  <div class="card center" id="gate">
+    <div class="big-icon"><i class="fa fa-cube"></i></div>
+    <h2 id="gateTitle">Memuat pesanan...</h2>
+    <p class="subtitle" id="gateText"></p>
+    <div class="aksi hidden" id="gateAksi">
+      <button class="btn btn-main" id="kembaliBtn">Ke daftar pesanan</button>
+    </div>
+  </div>
+
+  <div id="panel" class="hidden">
+
+    <div class="card">
+      <div class="head-row">
+        <h1 id="judul">Pesanan</h1>
+        <span id="badge"></span>
+      </div>
+      <p class="resi" id="info"></p>
+      <div id="progressBox" class="hidden">
+        <div class="progress"><div id="bar"></div></div>
+        <p class="progress-teks" id="progressTeks"></p>
+      </div>
+      <p class="error" id="formError"></p>
+      <div class="aksi" id="aksi"></div>
+    </div>
+
+    <div class="card">
+      <h3><i class="fa fa-cube"></i> Barang</h3>
+      <div id="barang"></div>
+    </div>
+
+    <div class="card">
+      <h3><i class="fa fa-map-marker"></i> Dikirim ke</h3>
+      <p class="alamat" id="alamat"></p>
+    </div>
+
+    <div class="card">
+      <div class="baris"><span>Subtotal barang</span><span id="subtotal"></span></div>
+      <div class="baris"><span id="labelKurir">Ongkos kirim</span><span id="ongkir"></span></div>
+      <div class="baris total"><span>Total</span><strong id="total"></strong></div>
+    </div>
+
+    <div class="card">
+      <h3><i class="fa fa-truck"></i> Riwayat &amp; pelacakan</h3>
+      <ul class="timeline" id="timeline"></ul>
+    </div>
+
+  </div>
+
+
+</div>
+
+<div class="toast hidden" id="toast"></div>
+
+<script>
+  const $ = function (id) { return document.getElementById(id); };
+
+  function rupiah(n) { return "Rp" + Number(n).toLocaleString("id-ID"); }
+
+  function toast(pesan) {
+    const t = $("toast");
+    t.textContent = pesan;
+    t.classList.remove("hidden");
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(function () { t.classList.add("hidden"); }, 2600);
+  }
+
+  async function api(url, opsi) {
+    const res = await fetch(url, opsi);
+    let data = {};
+    try { data = await res.json(); } catch (e) { /* bukan JSON */ }
+    if (!res.ok) {
+      const err = new Error(data.error || "Terjadi kesalahan.");
+      err.field = data.field;
+      err.status = res.status;
+      throw err;
+    }
+    return data;
+  }
+
+  function jsonOpsi(method, body) {
+    return {
+      method: method,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    };
+  }
+
+  function elemenKosong() {
+    const d = document.createElement("div");
+    d.className = "thumb-kosong";
+    d.innerHTML = '<i class="fa fa-image"></i>';
+    return d;
+  }
+
+  function elemenThumb(nama, alt) {
+    if (!nama) return elemenKosong();
+    const img = document.createElement("img");
+    img.className = "thumb";
+    img.alt = alt || "";
+    img.src = "/uploads/" + encodeURIComponent(nama);
+    img.onerror = function () { img.replaceWith(elemenKosong()); };
+    return img;
+  }
+
+  function waktu(t) {
+    return new Date(t * 1000).toLocaleString("id-ID", {
+      day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+  }
+
+  function durasi(detik) {
+    if (detik < 60) return detik + " detik";
+    const menit = Math.round(detik / 6) / 10;   // 1 angka di belakang koma
+    return menit + " menit";
+  }
+
+  const LABEL_STATUS = {
+    menunggu: "Menunggu penjual",
+    diproses: "Diproses",
+    dikirim: "Dalam pengiriman",
+    selesai: "Selesai",
+    dibatalkan: "Dibatalkan"
+  };
+
+  function badgeStatus(status) {
+    const b = document.createElement("span");
+    b.className = "badge st-" + status;
+    b.textContent = LABEL_STATUS[status] || status;
+    return b;
+  }
+
+
+  const orderId = parseInt(new URLSearchParams(window.location.search).get("id"), 10);
+  let saya = null;
+  let data = null;
+  let diambilPada = 0;     // jam browser saat data terakhir diambil
+  let pollTimer = null;
+  let tickTimer = null;
+
+  const LABEL_AKSI = {
+    proses: ["Proses pesanan", "btn-main"],
+    kirim:  ["Kirim pesanan", "btn-main"],
+    terima: ["Pesanan sudah diterima", "btn-main"],
+    batal:  ["Batalkan pesanan", "btn-danger"]
+  };
+
+  function sisaDetik() {
+    if (!data || !data.tracking || data.tracking.next_in === null) return null;
+    const lewat = Math.floor((Date.now() - diambilPada) / 1000);
+    return Math.max(0, data.tracking.next_in - lewat);
+  }
+
+  function tampilProgress() {
+    const box = $("progressBox");
+    const tr = data.tracking;
+    if (!tr || data.status === "dibatalkan") { box.classList.add("hidden"); return; }
+    box.classList.remove("hidden");
+    $("bar").style.width = (tr.tahap / tr.total_tahap * 100) + "%";
+
+    if (data.status === "selesai") {
+      $("progressTeks").textContent = "Paket sudah diterima.";
+    } else if (tr.tiba) {
+      $("progressTeks").textContent = "Kurir sudah tiba di alamat tujuan. Konfirmasi kalau paket sudah diterima.";
+    } else {
+      const sisa = sisaDetik();
+      $("progressTeks").textContent = "Tahap " + tr.tahap + " dari " + tr.total_tahap +
+        " · update berikutnya " + (sisa === null ? "" : "dalam " + sisa + " detik");
+    }
+  }
+
+  function render() {
+    const d = data;
+    document.title = "Pesanan #" + d.id + " - ReyMarket";
+    $("judul").textContent = "Pesanan #" + d.id;
+    $("badge").innerHTML = "";
+    $("badge").appendChild(badgeStatus(d.status));
+
+    const pembeli = saya && saya.id === d.buyer_id;
+    let info = (pembeli ? "Penjual: " + d.seller : "Pembeli: " + d.buyer) +
+      " · Kurir: " + d.courier + "\nDibuat " + waktu(d.created_at);
+    $("info").textContent = info;
+    if (d.resi) {
+      const strong = document.createElement("strong");
+      strong.textContent = d.resi;
+      $("info").append("\nNo. resi: ", strong);
+    }
+    $("info").style.whiteSpace = "pre-line";
+
+    tampilProgress();
+
+    // tombol aksi (daftar aksi ditentukan server)
+    const aksi = $("aksi");
+    aksi.innerHTML = "";
+    d.actions.forEach(function (a) {
+      const b = document.createElement("button");
+      b.className = "btn " + LABEL_AKSI[a][1];
+      b.textContent = LABEL_AKSI[a][0];
+      b.addEventListener("click", function () { lakukan(a, b); });
+      aksi.appendChild(b);
+    });
+    aksi.classList.toggle("hidden", d.actions.length === 0);
+
+    // barang
+    const barang = $("barang");
+    barang.innerHTML = "";
+    d.items.forEach(function (it) {
+      const row = document.createElement("div");
+      row.className = "barang";
+      const inf = document.createElement("div");
+      inf.className = "info";
+      const nama = document.createElement("p");
+      nama.className = "nama";
+      nama.textContent = it.name;
+      const sub = document.createElement("p");
+      sub.className = "sub";
+      sub.textContent = it.quantity + " x " + rupiah(it.price);
+      inf.append(nama, sub);
+      const harga = document.createElement("span");
+      harga.className = "harga";
+      harga.textContent = rupiah(it.subtotal);
+      row.append(elemenThumb(it.image, it.name), inf, harga);
+      barang.appendChild(row);
+    });
+
+    // alamat
+    const alamat = $("alamat");
+    alamat.textContent = "";
+    const tebal = document.createElement("strong");
+    tebal.textContent = d.ship_name;
+    alamat.append(tebal, "\n" + d.ship_phone + "\n" + d.ship_address);
+    if (d.note) {
+      const catatan = document.createElement("span");
+      catatan.className = "muted";
+      catatan.textContent = "\nCatatan: " + d.note;
+      alamat.appendChild(catatan);
+    }
+
+    $("subtotal").textContent = rupiah(d.subtotal);
+    $("labelKurir").textContent = "Ongkos kirim (" + d.courier + ")";
+    $("ongkir").textContent = rupiah(d.ongkir);
+    $("total").textContent = rupiah(d.total);
+
+    // linimasa: yang terbaru di atas
+    const tl = $("timeline");
+    tl.innerHTML = "";
+    d.timeline.slice().reverse().forEach(function (t, i) {
+      const li = document.createElement("li");
+      if (i === 0) li.className = "terbaru";
+      const judul = document.createElement("p");
+      judul.className = "judul";
+      judul.textContent = t.title;
+      const jam = document.createElement("p");
+      jam.className = "jam";
+      jam.textContent = waktu(t.time);
+      li.append(judul, jam);
+      tl.appendChild(li);
+    });
+  }
+
+  function atur(dataBaru) {
+    data = dataBaru;
+    diambilPada = Date.now();
+    render();
+    aturPolling();
+  }
+
+  // Selama paket dalam perjalanan, cek server tiap 3 detik + hitung mundur tiap detik
+  function aturPolling() {
+    clearInterval(pollTimer);
+    clearInterval(tickTimer);
+    if (data.status !== "dikirim") return;
+
+    pollTimer = setInterval(async function () {
+      try {
+        atur(await api("/api/orders/" + orderId));
+      } catch (e) { /* coba lagi pada putaran berikutnya */ }
+    }, 3000);
+    tickTimer = setInterval(tampilProgress, 1000);
+  }
+
+  async function lakukan(aksi, tombol) {
+    if (aksi === "batal" && !confirm("Batalkan pesanan ini?")) return;
+    $("formError").textContent = "";
+    tombol.disabled = true;
+    try {
+      atur(await api("/api/orders/" + orderId + "/status", jsonOpsi("POST", { action: aksi })));
+      toast("Status pesanan diperbarui.");
+    } catch (e) {
+      $("formError").textContent = e.message;
+      tombol.disabled = false;
+    }
+  }
+
+  $("kembaliBtn").addEventListener("click", function () { window.location.href = "orders.html"; });
+
+  async function mulai() {
+    if (!orderId) {
+      $("gateTitle").textContent = "Pesanan tidak ditemukan";
+      $("gateAksi").classList.remove("hidden");
+      return;
+    }
+    try {
+      const me = await api("/api/me");
+      if (!me.user) { window.location.href = "signin.html"; return; }
+      saya = me.user;
+      data = await api("/api/orders/" + orderId);
+    } catch (e) {
+      if (e.status === 404) {
+        $("gateTitle").textContent = "Pesanan tidak ditemukan";
+        $("gateText").textContent = "Pesanan ini tidak ada, atau bukan milikmu.";
+        $("gateAksi").classList.remove("hidden");
+      } else {
+        $("gateTitle").textContent = "Pesanan tidak bisa dimuat";
+        $("gateText").textContent = "Pastikan python app.py jalan dan buka lewat http://127.0.0.1:5000";
+      }
+      return;
+    }
+    $("gate").classList.add("hidden");
+    $("panel").classList.remove("hidden");
+    atur(data);
+  }
+
+  mulai();
+
+</script>
+
+</body>
+</html>
