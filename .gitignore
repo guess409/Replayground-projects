@@ -1,0 +1,14 @@
+secret.key
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.venv/
+venv/
+reymarket.db
+*.db
+uploads/
+report_uploads/
+cadangan_*/
+claude.zip
